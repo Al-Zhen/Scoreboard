@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tournament Scoreboard</title>
+  <title>Culvert PR Challenge</title>
+
+  <!-- Import Automata Black from CDN -->
+  <link href="https://fonts.cdnfonts.com/css/automata-black" rel="stylesheet">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Automata Black', Arial, sans-serif;
       margin: 20px;
       background: #f8f9fa;
       display: flex;
@@ -20,6 +24,7 @@
       text-align: center;
       margin-bottom: 10px;
       font-size: 18px;
+      color: black; /* Header color changed */
     }
     form {
       margin-bottom: 10px;
@@ -31,12 +36,14 @@
     input, button {
       padding: 4px;
       font-size: 12px;
+      font-family: 'Automata Black', Arial, sans-serif;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       background: white;
       font-size: 12px;
+      font-family: 'Automata Black', Arial, sans-serif;
     }
     th, td {
       border: 1px solid #ccc;
@@ -69,7 +76,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Scoreboard</h1>
+    <h1>Culvert PR Challenge</h1>
     <form id="scoreForm">
       <input type="text" id="ign" placeholder="IGN" required>
       <input type="text" id="class" placeholder="Class" required>
