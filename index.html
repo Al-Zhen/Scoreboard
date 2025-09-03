@@ -9,19 +9,84 @@
   <link href="https://fonts.cdnfonts.com/css/automata-black" rel="stylesheet">
 
   <style>
-    * { font-family: 'Automata Black', Arial, sans-serif; box-sizing: border-box; }
-    body { margin: 20px; background: #f8f9fa; display: flex; justify-content: center; }
-    .container { max-width: 360px; width: 100%; }
-    h1 { text-align: center; margin-bottom: 10px; font-size: 18px; color: black; }
-    form { margin-bottom: 10px; display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; }
-    input, button { padding: 4px; font-size: 12px; }
-    table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
-    th, td { border: 1px solid #ccc; padding: 4px; text-align: center; white-space: nowrap; position: relative; }
-    th { background: #000; color: white; font-weight: bold; }
-    tr:nth-child(even) { background: #f2f2f2; }
-    .delete-btn { visibility: hidden; cursor: pointer; color: red; font-size: 14px; }
-    tr:hover .delete-btn { visibility: visible; }
-    td.ign { font-weight: bold; }
+    /* All text in Automata Black and bold */
+    * {
+      font-family: 'Automata Black', Arial, sans-serif;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 20px;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 360px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: black;
+    }
+
+    form {
+      margin-bottom: 10px;
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    input, button {
+      padding: 4px;
+      font-size: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 4px;
+      text-align: center;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    th {
+      background: #000; /* Black header background */
+      color: white;    /* White text */
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    .delete-btn {
+      visibility: hidden;
+      cursor: pointer;
+      color: red;
+      font-size: 14px;
+    }
+
+    tr:hover .delete-btn {
+      visibility: visible;
+    }
+
+    td.ign {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
