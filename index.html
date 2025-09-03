@@ -9,70 +9,19 @@
   <link href="https://fonts.cdnfonts.com/css/automata-black" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Automata Black', Arial, sans-serif;
-      margin: 20px;
-      background: #f8f9fa;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      max-width: 360px;
-      width: 100%;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 18px;
-      color: black;
-    }
-    form {
-      margin-bottom: 10px;
-      display: flex;
-      gap: 4px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    input, button {
-      padding: 4px;
-      font-size: 12px;
-      font-family: 'Automata Black', Arial, sans-serif;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      font-size: 12px;
-      font-family: 'Automata Black', Arial, sans-serif;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 4px;
-      text-align: center;
-      white-space: nowrap;
-      position: relative;
-    }
-    th {
-      background: #000; /* Black header background */
-      color: white;    /* White text for contrast */
-      font-size: 12px;
-      font-weight: bold;
-    }
-    tr:nth-child(even) {
-      background: #f2f2f2;
-    }
-    .delete-btn {
-      visibility: hidden;
-      cursor: pointer;
-      color: red;
-      font-size: 14px;
-    }
-    tr:hover .delete-btn {
-      visibility: visible;
-    }
-    td.ign {
-      font-weight: bold;
-    }
+    * { font-family: 'Automata Black', Arial, sans-serif; box-sizing: border-box; }
+    body { margin: 20px; background: #f8f9fa; display: flex; justify-content: center; }
+    .container { max-width: 360px; width: 100%; }
+    h1 { text-align: center; margin-bottom: 10px; font-size: 18px; color: black; }
+    form { margin-bottom: 10px; display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; }
+    input, button { padding: 4px; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; }
+    th, td { border: 1px solid #ccc; padding: 4px; text-align: center; white-space: nowrap; position: relative; }
+    th { background: #000; color: white; font-weight: bold; }
+    tr:nth-child(even) { background: #f2f2f2; }
+    .delete-btn { visibility: hidden; cursor: pointer; color: red; font-size: 14px; }
+    tr:hover .delete-btn { visibility: visible; }
+    td.ign { font-weight: bold; }
   </style>
 </head>
 <body>
@@ -100,6 +49,7 @@
   </div>
 
   <script>
+    // Store players by class
     let players = JSON.parse(localStorage.getItem('players')) || {};
 
     function getRankLabel(rank) {
@@ -113,22 +63,23 @@
       const tbody = document.querySelector('#scoreTable tbody');
       tbody.innerHTML = '';
 
+      // Convert players object to array and sort by score descending
       const sortedPlayers = Object.entries(players)
         .sort((a, b) => b[1].score - a[1].score);
 
-      sortedPlayers.forEach(([ign, data], idx) => {
+      sortedPlayers.forEach(([cls, data], idx) => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${getRankLabel(idx + 1)}</td>
           <td>${data.score}</td>
-          <td class="ign">${ign}</td>
-          <td>${data.class}</td>
+          <td class="ign">${data.ign}</td>
+          <td>${cls}</td>
           <td><span class="delete-btn" title="Delete">🗑️</span></td>
         `;
 
         row.querySelector('.delete-btn').addEventListener('click', () => {
-          if (confirm(`Delete ${ign}?`)) {
-            delete players[ign];
+          if (confirm(`Delete ${data.ign} (${cls})?`)) {
+            delete players[cls];
             localStorage.setItem('players', JSON.stringify(players));
             updateTable();
           }
@@ -141,12 +92,15 @@
     document.getElementById('scoreForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const ign = document.getElementById('ign').value.trim();
-      const playerClass = document.getElementById('class').value.trim();
+      const cls = document.getElementById('class').value.trim();
       const score = parseInt(document.getElementById('score').value.trim());
 
-      if (ign && playerClass && !isNaN(score)) {
-        players[ign] = { score, class: playerClass };
-        localStorage.setItem('players', JSON.stringify(players));
+      if (ign && cls && !isNaN(score)) {
+        // Replace only if new score is higher
+        if (!players[cls] || score > players[cls].score) {
+          players[cls] = { ign, score };
+          localStorage.setItem('players', JSON.stringify(players));
+        }
         updateTable();
         this.reset();
       }
