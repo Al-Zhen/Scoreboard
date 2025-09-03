@@ -9,32 +9,38 @@
       font-family: Arial, sans-serif;
       margin: 20px;
       background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      max-width: 360px;
+      width: 100%;
     }
     h1 {
       text-align: center;
       margin-bottom: 10px;
+      font-size: 18px;
     }
     form {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       display: flex;
-      gap: 5px;
+      gap: 4px;
       justify-content: center;
       flex-wrap: wrap;
     }
     input, button {
-      padding: 4px 6px;
+      padding: 4px;
       font-size: 12px;
     }
     table {
-      width: auto;
-      margin: 0 auto;
+      width: 100%;
       border-collapse: collapse;
       background: white;
       font-size: 12px;
     }
     th, td {
       border: 1px solid #ccc;
-      padding: 4px 6px;
+      padding: 4px;
       text-align: center;
       white-space: nowrap;
       position: relative;
@@ -42,6 +48,7 @@
     th {
       background: #007BFF;
       color: white;
+      font-size: 12px;
     }
     tr:nth-child(even) {
       background: #f2f2f2;
@@ -55,29 +62,34 @@
     tr:hover .delete-btn {
       visibility: visible;
     }
+    td.ign {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h1>Scoreboard</h1>
-  <form id="scoreForm">
-    <input type="text" id="ign" placeholder="IGN" required>
-    <input type="text" id="class" placeholder="Class" required>
-    <input type="number" id="score" placeholder="Score" required>
-    <button type="submit">➕</button>
-  </form>
+  <div class="container">
+    <h1>Scoreboard</h1>
+    <form id="scoreForm">
+      <input type="text" id="ign" placeholder="IGN" required>
+      <input type="text" id="class" placeholder="Class" required>
+      <input type="number" id="score" placeholder="Score" required>
+      <button type="submit">➕</button>
+    </form>
 
-  <table id="scoreTable">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Score</th>
-        <th>IGN</th>
-        <th>Class</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <table id="scoreTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Score</th>
+          <th>IGN</th>
+          <th>Class</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <script>
     let players = JSON.parse(localStorage.getItem('players')) || {};
@@ -101,7 +113,7 @@
         row.innerHTML = `
           <td>${getRankLabel(idx + 1)}</td>
           <td>${data.score}</td>
-          <td>${ign}</td>
+          <td class="ign">${ign}</td>
           <td>${data.class}</td>
           <td><span class="delete-btn" title="Delete">🗑️</span></td>
         `;
