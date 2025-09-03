@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tournament Scoreboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f9fa;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #007BFF;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tournament Scoreboard</h1>
+  <form id="scoreForm">
+    <input type="text" id="ign" placeholder="IGN" required>
+    <input type="text" id="class" placeholder="Class" required>
+    <input type="number" id="score" placeholder="Score" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <table id="scoreTable">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>IGN</th>
+        <th>Class</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let players = JSON.parse(localStorage.getItem('players')) || {};
+
+    function getRankLabel(rank) {
+      if (rank === 1) return "1st place";
+      if (rank === 2) return "2nd place";
+      if (rank === 3) return "3rd place";
+      return rank + "th place";
+    }
+
+    function updateTable() {
+      const tbody = document.querySelector('#scoreTable tbody');
+      tbody.innerHTML = '';
+
+      const sortedPlayers = Object.entries(players)
+        .sort((a, b) => b[1].score - a[1].score);
+
+      sortedPlayers.forEach(([ign, data], idx) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${getRankLabel(idx + 1)}</td>
+          <td>${data.score}</td>
+          <td>${ign}</td>
+          <td>${data.class}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    document.getElementById('scoreForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const ign = document.getElementById('ign').value.trim();
+      const playerClass = document.getElementById('class').value.trim();
+      const score = parseInt(document.getElementById('score').value.trim());
+
+      if (ign && playerClass && !isNaN(score)) {
+        players[ign] = { score, class: playerClass };
+        localStorage.setItem('players', JSON.stringify(players));
+        updateTable();
+        this.reset();
+      }
+    });
+
+    updateTable();
+  </script>
+</body>
+</html>
