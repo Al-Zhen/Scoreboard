@@ -49,7 +49,6 @@
   </div>
 
   <script>
-    // Store players by class
     let players = JSON.parse(localStorage.getItem('players')) || {};
 
     function getRankLabel(rank) {
@@ -63,7 +62,6 @@
       const tbody = document.querySelector('#scoreTable tbody');
       tbody.innerHTML = '';
 
-      // Convert players object to array and sort by score descending
       const sortedPlayers = Object.entries(players)
         .sort((a, b) => b[1].score - a[1].score);
 
@@ -71,7 +69,7 @@
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${getRankLabel(idx + 1)}</td>
-          <td>${data.score}</td>
+          <td>${data.score.toLocaleString()}</td>
           <td class="ign">${data.ign}</td>
           <td>${cls}</td>
           <td><span class="delete-btn" title="Delete">🗑️</span></td>
