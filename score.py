@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 
-# Store players as a dictionary {ign: (score, class)}
+
 players = {}
 
 def get_rank_label(rank):
@@ -26,15 +26,15 @@ while True:
         print("Invalid score. Please enter a number.")
         continue
 
-    # Update or add new player
+
     if ign in players:
         print(f"Updating {ign}'s score...")
     players[ign] = (score, player_class)
 
-    # Sort players by score (descending)
+
     sorted_players = sorted(players.items(), key=lambda x: x[1][0], reverse=True)
 
-    # Display table
+
     table = PrettyTable()
     table.field_names = ["Rank", "Score", "IGN", "Class"]
 
